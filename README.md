@@ -4,8 +4,8 @@ Simple login/register APIs with JWT
 ## Technologies
 Project is created with:
 * Nodejs: 14.17.3
-* mongodb version
-* docker
+* mongodb: v4.4.5
+* docker: 20.10.13
 
 ## QuickStart
 To run this project, install it locally using npm:
