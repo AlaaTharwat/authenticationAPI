@@ -33,3 +33,7 @@ $ nodemon
 * jwtRefreshExpiration 
 
 **To use swagger documentation you shoud use this URL: localhost:7500/api-docs**
+
+### admin credintials:
+* alaa.tharrwat@gmail.com
+* 12345678
