@@ -32,4 +32,4 @@ $ nodemon
 * jwtExpiration
 * jwtRefreshExpiration 
 
-**To use swagger documentation you shoud use this URL: **
+**To use swagger documentation you shoud use this URL: localhost:7500/api-docs**
