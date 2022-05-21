@@ -32,6 +32,7 @@ exports.assignRoleToUser = async (req, res) => {
 
   let user = await User.findOne({ _id: userID });
   if (!user)  throw new ErrorHandler(400, "User not found");
+
   try {
     user.role = role
     await user.save();

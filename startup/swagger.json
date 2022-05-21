@@ -1,0 +1,628 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Full documentation of App APIs",
+    "version": "1.0.0",
+    "title": "App APIs",
+    "contact": {
+      "email": "App@Developer.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Post"
+    },
+    {
+      "name": "Role"
+    }
+  ],
+  "paths": {
+    "/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "user login",
+        "operationId": "login",
+        "description": "Login api , it accepts user's email and password, if email and password are not matching the records, return authorization error, if matching, return access token.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user's credentials",
+            "description": "user email and Password",
+            "schema": {
+              "$ref": "#/definitions/userLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "acceptance"
+          },
+          "400": {
+            "description": "validation error and any missing parameters"
+          },
+          "401": {
+            "description": " user not found or password mismatch."
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "user logout",
+        "operationId": "userlogout",
+        "description": "logout api",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200/201": {
+            "description": "acceptance"
+          },
+          "400": {
+            "description": "validation error and any missing parameters"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user's parameters",
+            "description": "user email, Password and phone number. ",
+            "schema": {
+              "$ref": "#/definitions/userModel"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "summary": "Creates a user",
+        "operationId": "createUser",
+        "description": "accepts user parameters then creates a user by storing it into database.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "email already exists or missing parameters"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/users/assignRole": {
+      "post": {
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "authentication token obtained by login",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "in": "body",
+            "name": "role's parameters",
+            "description": "user id and role name ",
+            "schema": {
+              "$ref": "#/definitions/addRole"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "summary": "Assign role",
+        "operationId": "assignrole",
+        "description": "assign role to a user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "You shoud choose correct role"
+          }
+        }
+      }
+    },
+    "/posts": {
+      "get": {
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "authentication token obtained by login",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "tags": [
+          "Post"
+        ],
+        "summary": "get all posts",
+        "operationId": "getPosts",
+        "description": "Gets all posts that was created by this user from database",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Access denied"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/posts/create": {
+      "post": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "creates a post",
+        "operationId": "createpost",
+        "description": "Accepts posts parameters and creates it by saving it into database",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "authentication token obtained by login",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "in": "body",
+            "name": "post's info",
+            "description": "post title and post info",
+            "schema": {
+              "$ref": "#/definitions/postModel"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "post was created successfully"
+          },
+          "400": {
+            "description": "access denied"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "get certain post",
+        "operationId": "getpost",
+        "description": "get a post by it's id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "authentication token obtained by login",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "401": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "post not found"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Post"
+        ],
+        "summary": "Delete a post",
+        "operationId": "deletepost",
+        "description": "delete a post by it's id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "authentication token obtained by login",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "401": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "post not found"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/roles": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "gets all roles",
+        "operationId": "getroles",
+        "description": "get all the roles from database",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/roles/addRole": {
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "creates a role",
+        "operationId": "createrole",
+        "description": "creates a role into the database that gives users certain privileges",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "authentication token obtained by login",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "in": "body",
+            "name": "role's info",
+            "description": "role's name and slug",
+            "schema": {
+              "$ref": "#/definitions/roleModel"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "role was created successfully"
+          },
+          "400": {
+            "description": "access denied"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/roles/addResource": {
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "creates a resource",
+        "operationId": "createresource",
+        "description": "Creates a resource and saves it into database",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "authentication token obtained by login",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "in": "body",
+            "name": "post's info",
+            "description": "resource name, slug and  resource_role",
+            "schema": {
+              "$ref": "#/definitions/resourceModel"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "resource was created successfully"
+          },
+          "400": {
+            "description": "access denied"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "userlogin": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "examble@examble.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        }
+      }
+    },
+    "userModel": {
+      "type": "object",
+      "required": [
+        "email",
+        "password",
+        "name",
+        "phone",
+        "role"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "example@example.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "12345678"
+        },
+        "name": {
+          "type": "string",
+          "example": "Alaa thrwat"
+        },
+        "phone": {
+          "type": "string",
+          "example": "01234567890"
+        },
+        "role": {
+          "type": "string",
+          "example": "admin"
+        }
+      }
+    },
+    "postModel": {
+      "type": "object",
+      "required": [
+        "title",
+        "content"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "hello world"
+        },
+        "content": {
+          "type": "string",
+          "example": "post content"
+        }
+      }
+    },
+    "addRole": {
+      "type": "object",
+      "required": [
+        "id",
+        "role"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "62826205bdbc0b8777db1cce"
+        },
+        "role": {
+          "type": "string",
+          "example": "admin"
+        }
+      }
+    },
+    "roleModel": {
+      "type": "object",
+      "required": [
+        "name",
+        "slug"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "admin"
+        },
+        "slug": {
+          "type": "string",
+          "example": "slug for admin"
+        }
+      }
+    },
+    "resourceModel": {
+      "type": "object",
+      "required": [
+        "name",
+        "slug",
+        "resources_roles"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "admin"
+        },
+        "slug": {
+          "type": "string",
+          "example": "slug for admin"
+        },
+        "resources_roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/resource_roleModel"
+          },
+          "example": "[array of privileges]"
+        }
+      }
+    },
+    "resource_roleModel": {
+      "type": "object",
+      "required": [
+        "roles_id",
+        "roles_name",
+        "create",
+        "delete",
+        "update",
+        "read"
+      ],
+      "properties": {
+        "roles_id": {
+          "type": "string",
+          "example": "62826205bdbc0b8777db1cce"
+        },
+        "roles_name": {
+          "type": "string",
+          "example": "admin"
+        },
+        "create": {
+          "type": "boolean",
+          "example": true
+        },
+        "delete": {
+          "type": "boolean",
+          "example": true
+        },
+        "update": {
+          "type": "boolean",
+          "example": true
+        },
+        "read": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "host": "localhost:7500",
+  "basePath": "/api"
+}
