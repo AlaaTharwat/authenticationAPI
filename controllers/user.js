@@ -20,6 +20,7 @@ exports.createUser = async(req, res) => {
   try {
     await user.save();
   } catch (err) {
+   if(err.code == 11000) throw new ErrorHandler(400, "Duplicate phone or name");
     throw new ErrorHandler(500, err);
   }
   return success(201, "Created successfully", res)

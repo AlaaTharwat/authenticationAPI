@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     isDeleted: {
-        Types: Boolean,
+        Type: Boolean,
         default: false
     },
     user: {

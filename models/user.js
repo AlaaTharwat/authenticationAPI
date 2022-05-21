@@ -76,6 +76,7 @@ function validateUser(user) {
     email: Joi.string().email().max(255).required(),
     password: Joi.string().min(5).max(255).required(),
     phone: Joi.string().max(11).min(11).required(),
+    // role: Joi.string()
    
   }).options({ abortEarly: false });
 
