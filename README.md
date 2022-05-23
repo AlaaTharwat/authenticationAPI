@@ -15,7 +15,7 @@ To run this project, install it locally using npm:
 $ get clone https://github.com/AlaaTharwat/authenticationAPI
 ```
 
-## With docker:
+### With docker:
 ```
 $ docker-compose build
 ```
@@ -24,7 +24,7 @@ $ docker-compose build
 $ docker-compose up
 ```
 
-## Without docker:
+### Without docker:
 * install packages:
 ```
 $ npm install
