@@ -1,35 +1,24 @@
 # authenticationAPI
-Simple login/register APIs with JWT
+a working node backend based on a given set of business conditions
 
 ## Technologies
 Project is created with:
 * Nodejs: 14.17.3
 * mongodb: v4.4.5
-* docker: 20.10.13
+
 
 ## QuickStart
 To run this project, install it locally using npm:
 
 * Clone this repository:
 ```
-$ get clone https://github.com/AlaaTharwat/authenticationAPI
+$ get clone https://github.com/AlaaTharwat/backend-task
 ```
 
-### With docker:
-```
-$ docker-compose build
-```
-
-```
-$ docker-compose up
-```
-
-### Without docker:
 * install packages:
 ```
 $ npm install
 ```
-
 
 * start project:
 ```
@@ -41,8 +30,5 @@ $ nodemon
 * jwtExpiration
 * jwtRefreshExpiration 
 
-**To use swagger documentation you shoud use this URL: localhost:7500/api-docs**
 
-### admin credintials:
-* alaa.tharrwat@gmail.com
-* 12345678
+
